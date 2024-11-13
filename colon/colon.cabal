@@ -133,4 +133,9 @@ test-suite colon-test
     -- Test dependencies.
     build-depends:
         base ^>=4.20.0.0,
-        colon
+        colon,
+        tasty,
+        tasty-hunit,
+        tasty-hedgehog,
+        HUnit,
+        hedgehog
