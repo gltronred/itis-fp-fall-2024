@@ -1,16 +1,25 @@
 # Учебный язык программирования Paren
 
 >    Some said the world should be in Perl;
+>
 >    Some said in Lisp.
+>
 >    Now, having given both a whirl,
+>
 >    I held with those who favored Perl.
+>
 >    But I fear we passed to men
+>
 >    A disappointing founding myth,
+>
 >    And should we write it all again,
+>
 >    I'd end it with
+>
 >    A close-paren.
 >
-> With Apologies to Robert Frost, https://xkcd.com/312
+>
+> With Apologies to Robert Frost, https://xkcd.ru/312
 
 Paren -- минимальный диалект языка [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language))
 
