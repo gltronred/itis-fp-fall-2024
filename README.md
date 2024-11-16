@@ -2,6 +2,10 @@
 
 https://func.gltronred.info
 
+# Код, написанный на парах
+
+... лежит [здесь](lessons/)
+
 # Задания для реализации
 
 Общее описание: https://func.gltronred.info/task.html
