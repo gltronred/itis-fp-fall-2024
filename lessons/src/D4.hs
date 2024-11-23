@@ -86,14 +86,18 @@ instance Alternative Parser where
 
 module D4 where
 
+import Data.Void (Void)
 import Text.Megaparsec
 import Text.Megaparsec.Char
+
+type Parser = Parsec Void String
 
 data SExpr = Atom String
            | Call [SExpr]
            deriving (Eq,Show,Read)
 
-expr = (Call <$> single '(' *> exprs <* single ')')
+expr :: Parser SExpr
+expr = ((\_ es _ -> Call es) <$> char '(' <*> exprs <*> char ')')
   <|> atom
-exprs = many expr
-atom = Atom <$> many alphaNum
+exprs = expr `sepBy1` space1
+atom = Atom <$> many alphaNumChar
