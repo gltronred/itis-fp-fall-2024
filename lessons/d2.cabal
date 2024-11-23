@@ -61,7 +61,7 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  D2, D3, D3_2
+    exposed-modules:  D2, D3, D3_2, D4
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -73,6 +73,7 @@ library
     build-depends:    base >=4.17.0.0
                     , transformers
                     , mtl
+                    , megaparsec
 
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -88,7 +89,7 @@ executable d2
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules:    Types
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
