@@ -92,10 +92,6 @@ import Text.Megaparsec.Char
 
 type Parser = Parsec Void String
 
--- (abc (def ghi jkl) mno qpr)
--- (abc . (def . ghi . jkl . ()) . mno . qpr . ())
-data STree = Nil | Atom String | STree SExpr STree
-
 data SExpr = Atom String
            | Call [SExpr]
            deriving (Eq,Show,Read)
@@ -109,3 +105,9 @@ exprs = expr `sepBy1` space1
 
 atom :: Parser String
 atom = some alphaNumChar
+
+
+-- (abc (def ghi jkl) mno qpr)
+-- (abc . (def . ghi . jkl . ()) . mno . qpr . ())
+-- unsugar :: SExpr -> STree
+data STree = Nil | Atom String | STree SExpr STree
