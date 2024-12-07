@@ -24,14 +24,22 @@ data Message
   | Error
     { errorText :: String }
   deriving (Eq,Show,Read,Generic)
+  deriving (FromJSON,ToJSON) via Generically Message
 
-customOptions = defaultOptions { sumEncoding = defaultTaggedObject }
+-- Отдельно стоящая конструкция deriving via:
+--
+-- deriving via Generically Message instance FromJSON Message
+-- deriving via Generically Message instance ToJSON Message
 
-instance FromJSON Message where
-  parseJSON = genericParseJSON customOptions
-instance ToJSON Message where
-  toJSON = genericToJSON customOptions
-  toEncoding = genericToEncoding customOptions
+-- Модифицируем опции конвертации:
+--
+-- customOptions = defaultOptions { sumEncoding = defaultTaggedObject }
+--
+-- instance FromJSON Message where
+--   parseJSON = genericParseJSON customOptions
+-- instance ToJSON Message where
+--   toJSON = genericToJSON customOptions
+--   toEncoding = genericToEncoding customOptions
 
 {-
 
