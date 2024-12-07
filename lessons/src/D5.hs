@@ -21,13 +21,17 @@ data Message
     { commandType :: String
     , commandArgs :: [Int]
     }
---   | Error
---     { errorText :: String }
+  | Error
+    { errorText :: String }
   deriving (Eq,Show,Read,Generic)
 
-deriving via Generically Message instance ToJSON Message
+customOptions = defaultOptions { sumEncoding = defaultTaggedObject }
 
-instance FromJSON Message
+instance FromJSON Message where
+  parseJSON = genericParseJSON customOptions
+instance ToJSON Message where
+  toJSON = genericToJSON customOptions
+  toEncoding = genericToEncoding customOptions
 
 {-
 
@@ -87,4 +91,33 @@ data Message
     }
 
 Произведение типов: String * [Int]
+-}
+
+{-
+Варианты кодирования типов-сумм (SumEncoding):
+
+TwoElemArray:
+ghci> encode $ D5.Error "adfasdf"
+"[\"Error\",{\"errorText\":\"adfasdf\"}]"
+ghci> encode $ Command "add" [1,2,3]
+"[\"Command\",{\"commandType\":\"add\",\"commandArgs\":[1,2,3]}]"
+
+ObjectWithSingleField:
+ghci> encode $ D5.Error "adfasdf"
+"{\"Error\":{\"errorText\":\"adfasdf\"}}"
+ghci> encode $ Command "add" [1,2,3]
+"{\"Command\":{\"commandType\":\"add\",\"commandArgs\":[1,2,3]}}"
+
+UntaggedValue:
+ghci> encode $ D5.Error "adfasdf"
+"{\"errorText\":\"adfasdf\"}"
+ghci> encode $ Command "add" [1,2,3]
+"{\"commandType\":\"add\",\"commandArgs\":[1,2,3]}"
+
+TaggedObject:
+ghci> encode $ D5.Error "adfasdf"
+"{\"tag\":\"Error\",\"errorText\":\"adfasdf\"}"
+ghci> encode $ Command "add" [1,2,3]
+"{\"tag\":\"Command\",\"commandType\":\"add\",\"commandArgs\":[1,2,3]}"
+
 -}
