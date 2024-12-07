@@ -1,14 +1,16 @@
 -- |
 
+{-# LANGUAGE OverloadedStrings #-}
 module D5 where
 
 import Data.Aeson
+import Data.Aeson.Types
 
 data JSON
-  = Object [(String, JSON)]
-  | Array [JSON]
-  | String String
-  | Number Double
+  = Obj [(String, JSON)]
+  | Arr [JSON]
+  | Str String
+  | Num Double
   | Bool Bool
   | Null
 
@@ -19,6 +21,7 @@ data Message
     }
 --   | Error
 --     { errorText :: String }
+  deriving (Eq,Show,Read)
 
 {-
 
@@ -42,3 +45,7 @@ instance FromJSON Message where
     <$> v .: "commandType"
     <*> v .: "commandArgs"
   parseJSON invalid = typeMismatch "Message" invalid
+
+instance ToJSON Message where
+  toJSON (Command x y) = error "Implement me!"
+  toEncoding (Command x y) = error "Implement me!"
