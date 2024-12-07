@@ -61,7 +61,7 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  D2, D3, D3_2, D4
+    exposed-modules:  D2, D3, D3_2, D4, D5
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -74,6 +74,7 @@ library
                     , transformers
                     , mtl
                     , megaparsec
+                    , aeson
 
     -- Directories containing source files.
     hs-source-dirs:   src
