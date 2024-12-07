@@ -110,4 +110,4 @@ atom = some alphaNumChar
 -- (abc (def ghi jkl) mno qpr)
 -- (abc . (def . ghi . jkl . ()) . mno . qpr . ())
 -- unsugar :: SExpr -> STree
-data STree = Nil | Atom String | STree SExpr STree
+-- data STree = Nil | Atom String | STree SExpr STree
