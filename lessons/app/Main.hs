@@ -45,6 +45,7 @@ ghci File.hs
 
 -- module Main where
 import Types
+import D6
 
 f x = x*x
 
@@ -217,4 +218,4 @@ t1 = Node
 -- countLeaf t1 == 4
 
 
-main = putStrLn "Hi!"
+main = run
