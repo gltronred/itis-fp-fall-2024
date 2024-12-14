@@ -30,6 +30,12 @@ thread v k = do
 
 run :: IO ()
 run = do
+  -- сколько потоков доступно
+  -- (см. опции RTS: https://downloads.haskell.org/ghc/latest/docs/users_guide/using-concurrent.html#parallel-options)
+  nproc <- getNumCapabilities
+  print nproc
+
+  -- используем TVar из stm
   v <- newTVarIO 0
   -- ждём завершения потоков (иначе основной поток завершится раньше)
   mvars <- forM [1..3] $ \k -> do
