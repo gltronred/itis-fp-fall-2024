@@ -17,7 +17,7 @@ BEGIN <операции> UNTIL
 Пример использования цикла `BEGIN ... UNTIL`:
 ```
 : count
-10
+0
 BEGIN 
   DUP .
   1 +
