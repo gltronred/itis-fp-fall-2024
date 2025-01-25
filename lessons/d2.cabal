@@ -61,7 +61,7 @@ library
     import:           warnings
 
     -- Modules exported by the library.
-    exposed-modules:  D2, D3, D3_2, D4, D5, D6
+    exposed-modules:  D2, D3, D3_2, D4, D5, D6, D7
 
     -- Modules included in this library but not exported.
     -- other-modules:
