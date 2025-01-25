@@ -1,5 +1,6 @@
 -- | lenses:
 -- https://hackage.haskell.org/package/lens
+-- https://web.archive.org/web/20210521023726/https://artyom.me/lens-over-tea-1
 
 {-# LANGUAGE TemplateHaskell #-}
 module D7 where
