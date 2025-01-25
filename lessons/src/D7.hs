@@ -1,11 +1,13 @@
 -- | lenses:
 -- https://hackage.haskell.org/package/lens
 
+{-# LANGUAGE TemplateHaskell #-}
 module D7 where
 
-import Data.Function
-import Data.Functor.Constant
-import Data.Functor.Identity
+-- import Data.Function
+-- import Data.Functor.Constant
+-- import Data.Functor.Identity
+import Control.Lens
 
 data FieldB = FieldB
   { _subA :: String
@@ -18,6 +20,9 @@ data Struct = Struct
   , _fieldB :: FieldB
   }
   deriving (Eq,Show,Read)
+
+makeLenses ''FieldB
+makeLenses ''Struct
 
 s1 = Struct
   { _fieldA = 5
@@ -54,23 +59,54 @@ modifyFieldB f s = let
 
 ---------------------------------------------
 
-fieldB :: Functor f => (FieldB -> f FieldB) -> (Struct -> f Struct)
-fieldB f s = let
-  old = _fieldB s  -- FieldB
-  new = f old      -- f FieldB
-  in (\n -> s { _fieldB = n}) <$> new
+-- fieldB :: Functor f => (FieldB -> f FieldB) -> (Struct -> f Struct)
+-- fieldB f s = let
+--   old = _fieldB s  -- FieldB
+--   new = f old      -- f FieldB
+--   in (\n -> s { _fieldB = n}) <$> new
+--
+-- setFB :: FieldB -> Identity FieldB
+-- setFB _ = pure $ FieldB { _subA = "ok", _subB = "" }
+--
+-- getFB :: FieldB -> Constant FieldB FieldB
+-- getFB b = Constant b
+--
+-- subA :: Functor f => (String -> f String) -> FieldB -> f FieldB
+-- subA f s = let
+--   old = _subA s
+--   new = f old
+--   in (\n -> s { _subA = n }) <$> new
+--
+-- getSA :: String -> Constant String String
+-- getSA b = Constant b
 
-setFB :: FieldB -> Identity FieldB
-setFB _ = pure $ FieldB { _subA = "ok", _subB = "" }
+---------------------------------------------
+{-
 
-getFB :: FieldB -> Constant FieldB FieldB
-getFB b = Constant b
+λ> s1 ^. fieldA
+5
+λ> :t (^.)
+(^.) :: s -> Getting a s a -> a
+λ> s2 ^. fieldB . subA
+"asdfasdf"
 
-subA :: Functor f => (String -> f String) -> FieldB -> f FieldB
-subA f s = let
-  old = _subA s
-  new = f old
-  in (\n -> s { _subA = n }) <$> new
 
-getSA :: String -> Constant String String
-getSA b = Constant b
+λ> s2 ^? fieldB . subA . ix 5
+Just 's'
+λ> s2 ^? fieldB . subA
+Just "asdfasdf"
+
+
+λ> s2 & fieldB . subA .~ "asdf"
+Struct {_fieldA = 1, _fieldB = FieldB {_subA = "asdf", _subB = "bcd"}}
+
+
+λ> s2 & fieldB . subA %~ take 2
+Struct {_fieldA = 1, _fieldB = FieldB {_subA = "as", _subB = "bcd"}}
+
+
+λ> s2 & fieldB . subA . ix 5 %~ toUpper
+Struct {_fieldA = 1, _fieldB = FieldB {_subA = "asdfaSdf", _subB = "bcd"}}
+
+
+-}
